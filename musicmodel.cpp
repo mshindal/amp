@@ -139,3 +139,8 @@ void MusicModel::searchFolderRecursively(const QString& absolutePath)
 
 
 }
+
+Song* MusicModel::qModelIndexToSong(const QModelIndex &index)
+{
+    return songsList.at(index.row());
+}

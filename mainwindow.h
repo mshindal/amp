@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTreeView>
 #include <QObject>
+#include <QMediaPlayer>
 #include "musicmodel.h"
 
 class MainWindow : public QMainWindow
@@ -16,6 +17,7 @@ public:
 private:
     QTreeView* treeView;
     MusicModel* model;
+    QMediaPlayer* player;
 private slots:
     void playSong(QModelIndex index);
 };

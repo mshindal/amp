@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     treeView = new QTreeView(this);
     model = new MusicModel(treeView);
+    player = new QMediaPlayer(this);
     treeView->setModel(model);
     setCentralWidget(treeView);
     connect(treeView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(playSong(QModelIndex)));
@@ -21,6 +22,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::playSong(QModelIndex index)
 {
-    //Song* s = (Song*) index.internalPointer();
-    //std::cout << s->title.toStdString() << std::endl;
+    Song* s = model->qModelIndexToSong(index);
+    if (player->PlayingState == QMediaPlayer::PlayingState) {
+        player->stop();
+    }
+    player->setMedia(QUrl::fromLocalFile(s->path));
+    player->play();
 }
