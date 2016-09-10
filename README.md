@@ -2,7 +2,9 @@
 A music player for Windows, MacOS, and Linux.
 
 ## Screenshots
-TODO
+<img src="https://i.imgur.com/vyuaTPw.png" width="600" height="470" alt="qTunes on KDE.">
+
+qTunes on KDE.
 
 ## Builds
 TODO
