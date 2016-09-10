@@ -4,7 +4,7 @@
 
 class Artist
 {
-public:
+  public:
     Artist();
 };
 

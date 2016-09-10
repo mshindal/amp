@@ -4,10 +4,10 @@
 
 class Song : public TreeNode
 {
-public:
+  public:
     Song(const QString& path);
     QByteArray getHashCode();
-private:
+  private:
     void readTags();
 };
 

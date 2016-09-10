@@ -8,7 +8,7 @@
 
 class Album : public TreeNode
 {
-public:
+  public:
     Album(Song* s);
     void addSong(Song* s);
     QByteArray getHashCode();

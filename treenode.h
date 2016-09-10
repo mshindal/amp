@@ -6,7 +6,7 @@
 
 class TreeNode
 {
-public:
+  public:
     TreeNode();
     QString path = DEFAULT_METADATA_TEXT;
     QVariant title = DEFAULT_METADATA_TEXT;

@@ -11,8 +11,8 @@
 
 class MusicModel : public QAbstractListModel
 {
-    Q_OBJECT
-public:
+  Q_OBJECT
+  public:
     MusicModel(QObject *parent = nullptr);
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -20,7 +20,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
     void scan();
     Song* qModelIndexToSong(const QModelIndex &index);
-private:
+  private:
     void searchFolderRecursively(const QString& absolutePath);
     QList <Song*> songsList;
     QHash <QByteArray, Song*> songs;

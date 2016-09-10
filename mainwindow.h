@@ -12,19 +12,19 @@
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+  Q_OBJECT
 
-public:
+  public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-private:
+  private:
     QWidget* centralWidget;
     QTreeView* treeView;
     MusicModel* model;
     QMediaPlayer* player;
     QSlider* slider;
     QVBoxLayout* layout;
-private slots:
+  private slots:
     void playSong(QModelIndex index);
     void songPositionChanged(qint64 position);
     void sliderPositionChanged(int newValue);
