@@ -8,6 +8,9 @@ MusicModel::MusicModel(QObject* parent) : QAbstractListModel(parent)
   /* right now we scan for music before completely starting the app,
    * but really we should do it incrementally in another thread */
   scan();
+
+  // uncomment to print trees of albums and songs
+  /*
   QHash<QByteArray, Album*>::const_iterator i = albums.constBegin();
   while (i != albums.constEnd()) {
     std::cout << i.value()->title.toString().toStdString() << std::endl;
@@ -16,6 +19,7 @@ MusicModel::MusicModel(QObject* parent) : QAbstractListModel(parent)
     }
     ++i;
   }
+  */
 }
 
 int MusicModel::rowCount(const QModelIndex &parent) const
@@ -95,7 +99,7 @@ void MusicModel::searchFolderRecursively(const QString& absolutePath)
   QList<QString> relativePaths = dir.entryList();
   for (const QString& relativePath : relativePaths) {
     QString absolutePath = dir.absoluteFilePath(relativePath);
-    std::cout << absolutePath.toStdString() << std::endl;
+    //std::cout << absolutePath.toStdString() << std::endl;
 
     try {
       Song* s = new Song(absolutePath);

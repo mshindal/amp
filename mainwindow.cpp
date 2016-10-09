@@ -8,17 +8,21 @@
 MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
 {
-  layout = new QVBoxLayout(this);
-  treeView = new QTreeView(this);
+  centralWidget = new QWidget(this);
+  setCentralWidget(centralWidget);
+
+  layout = new QVBoxLayout(centralWidget);
+
+  treeView = new QTreeView;
   layout->addWidget(treeView);
-  slider = new QSlider(Qt::Horizontal, this);
+
+  nowPlaying = new NowPlaying;
+  layout->addWidget(nowPlaying);
+
+  slider = new QSlider(Qt::Horizontal);
   slider->setDisabled(true);
   slider->setRange(0, SLIDER_RESOLUTION);
   layout->addWidget(slider);
-
-  centralWidget = new QWidget(this);
-  centralWidget->setLayout(layout);
-  setCentralWidget(centralWidget);
 
   model = new MusicModel(treeView);
   treeView->setModel(model);
@@ -38,15 +42,13 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-  // no need to call `delete` on the treeView or the model, since Qt's Object Hierarchy takes care of it
 }
 
 void MainWindow::playSong(QModelIndex index)
 {
+  player->stop();
   Song* s = model->qModelIndexToSong(index);
-  if (player->PlayingState == QMediaPlayer::PlayingState) {
-    player->stop();
-  }
+  currentSong = s;
   player->setMedia(QUrl::fromLocalFile(s->path));
   player->play();
 }
@@ -71,10 +73,16 @@ void MainWindow::playerStateChanged(QMediaPlayer::State state)
   switch (state) {
     case QMediaPlayer::StoppedState:
       slider->setDisabled(true);
+      currentSong = nullptr;
+      nowPlaying->setInfo(nullptr);
       break;
     case QMediaPlayer::PlayingState:
-    case QMediaPlayer::PausedState:
-    default:
       slider->setDisabled(false);
+      nowPlaying->setInfo(currentSong);
+      break;
+    case QMediaPlayer::PausedState:
+      break;
+    default:
+      break;
   }
 }

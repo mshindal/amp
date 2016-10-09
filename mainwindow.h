@@ -9,6 +9,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include "musicmodel.h"
+#include "nowplaying.h"
 
 class MainWindow : public QMainWindow
 {
@@ -24,6 +25,8 @@ class MainWindow : public QMainWindow
     QMediaPlayer* player;
     QSlider* slider;
     QVBoxLayout* layout;
+    NowPlaying* nowPlaying;
+    Song* currentSong;
   private slots:
     void playSong(QModelIndex index);
     void songPositionChanged(qint64 position);
