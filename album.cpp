@@ -1,18 +1,11 @@
 #include "album.h"
-#include <QFileInfo>
 #include <QCryptographicHash>
-#include <QDir>
 
-Album::Album(Song* s)
+Album::Album(QVariant title, QVariant artist, QVariant year)
 {
-  QFileInfo fileInfo(s->path);
-  this->path = fileInfo.absoluteDir().path();
-  this->title = s->album;
-  this->artist = s->artist;
-  this->album = this->title;
-  this->track = "N/A";
-  this->year = s->year;
-  addSong(s);
+  this->title = title;
+  this->artist = artist;
+  this->year = year;
 }
 
 QByteArray Album::getHashCode()
@@ -24,9 +17,3 @@ QByteArray Album::getHashCode()
   return crypto.result();
 }
 
-void Album::addSong(Song *s)
-{
-  songs.insert(s->track.toInt(), s);
-  this->children.append(s);
-  s->parent = this;
-}
