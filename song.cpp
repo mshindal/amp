@@ -26,7 +26,7 @@ Song::Song(QString path)
     trackNum = tag->track();
     year = tag->year();
   } else {
-    std::cerr << "Failed to read tags for " << path.toStdString() << std::endl;
+    throw std::runtime_error("Failed to read tags");
   }
 }
 
