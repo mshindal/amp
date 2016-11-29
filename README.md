@@ -1,5 +1,5 @@
 # amp
-amp - (a)nother (m)usic (p)layer
+amp - another music player
 
 A music player for Windows, macOS, and Linux.
 
