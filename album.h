@@ -1,18 +1,20 @@
 #ifndef ALBUM_H
 #define ALBUM_H
 
-#include "treenode.h"
-#include <QMap>
+#include <QMultiMap>
 #include <QByteArray>
+#include <QVariant>
 #include "song.h"
 
-class Album : public TreeNode
+class Album
 {
   public:
-    Album(Song* s);
-    void addSong(Song* s);
+    Album(QVariant title, QVariant artist, QVariant year);
     QByteArray getHashCode();
-    QMap <int, Song*> songs;
+    QVariant title;
+    QVariant artist;
+    QVariant year;
+    QMultiMap <int, Song*> songs;
 };
 
 #endif // ALBUM_H

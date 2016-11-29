@@ -26,7 +26,7 @@ class MainWindow : public QMainWindow
     QSlider* slider;
     QVBoxLayout* layout;
     NowPlaying* nowPlaying;
-    Song* currentSong;
+    const Song* currentSong;
   private slots:
     void playSong(QModelIndex index);
     void songPositionChanged(qint64 position);

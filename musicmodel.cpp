@@ -8,23 +8,11 @@ MusicModel::MusicModel(QObject* parent) : QAbstractListModel(parent)
   /* right now we scan for music before completely starting the app,
    * but really we should do it incrementally in another thread */
   scan();
-
-  // uncomment to print trees of albums and songs
-  /*
-  QHash<QByteArray, Album*>::const_iterator i = albums.constBegin();
-  while (i != albums.constEnd()) {
-    std::cout << i.value()->title.toString().toStdString() << std::endl;
-    for (const Song* s : i.value()->songs) {
-      std::cout << "\t" << s->title.toString().toStdString() << std::endl;
-    }
-    ++i;
-  }
-  */
 }
 
 int MusicModel::rowCount(const QModelIndex &parent) const
 {
-  return songsList.count();
+  return songs.count();
 }
 
 int MusicModel::columnCount(const QModelIndex &parent) const
@@ -36,16 +24,16 @@ QVariant MusicModel::data(const QModelIndex &index, int role) const
 {
   if (role == Qt::DisplayRole) {
     switch (index.column()) {
-      case 0:
-        return songsList.at(index.row())->title;
-      case 1:
-        return songsList.at(index.row())->artist;
-      case 2:
-        return songsList.at(index.row())->album;
-      case 3:
-        return songsList.at(index.row())->year;
-      case 4:
-        return songsList.at(index.row())->track;
+    case 0:
+      return songs.at(index.row()).title;
+    case 1:
+      return songs.at(index.row()).artist;
+    case 2:
+      return songs.at(index.row()).album;
+    case 3:
+      return songs.at(index.row()).year;
+    case 4:
+      return songs.at(index.row()).trackNum;
     }
   }
 
@@ -58,16 +46,16 @@ QVariant MusicModel::headerData(int section, Qt::Orientation orientation, int ro
   {
     if (orientation == Qt::Horizontal) {
       switch (section) {
-        case 0:
-          return "Title";
-        case 1:
-          return "Artist";
-        case 2:
-          return "Album";
-        case 3:
-          return "Year";
-        case 4:
-          return "Track No";
+      case 0:
+        return "Title";
+      case 1:
+        return "Artist";
+      case 2:
+        return "Album";
+      case 3:
+        return "Year";
+      case 4:
+        return "Track No";
       }
     }
   }
@@ -99,35 +87,11 @@ void MusicModel::searchFolderRecursively(const QString& absolutePath)
   QList<QString> relativePaths = dir.entryList();
   for (const QString& relativePath : relativePaths) {
     QString absolutePath = dir.absoluteFilePath(relativePath);
-    //std::cout << absolutePath.toStdString() << std::endl;
-
     try {
-      Song* s = new Song(absolutePath);
-
-      QByteArray songHash = s->getHashCode();
-
-      if (!songs.contains(songHash)) {
-        songs.insert(songHash, s);
-        songsList.append(s);
-      } else {
-        delete s;
-        s = songs.value(songHash);
-      }
-
-      Album* a = new Album(s);
-      QByteArray albumHash = a->getHashCode();
-
-      if (!albums.contains(albumHash)) {
-        albums.insert(albumHash, a);
-      } else {
-        delete a;
-        a = albums.value(albumHash);
-      }
-
-      a->addSong(s);
-    } catch (const std::exception& e) {
-      std::cerr << "Failed to read file " << absolutePath.toStdString() << std::endl;
-      continue;
+      Song s(absolutePath);
+      songs.append(s);
+    } catch (std::runtime_error& e) {
+      std::cerr << absolutePath.toStdString() << ": " << e.what() << std::endl;
     }
   }
 
@@ -140,11 +104,9 @@ void MusicModel::searchFolderRecursively(const QString& absolutePath)
   for (const QString& subDir : subDirs) {
     searchFolderRecursively(dir.absoluteFilePath(subDir));
   }
-
-
 }
 
-Song* MusicModel::qModelIndexToSong(const QModelIndex &index)
+const Song* MusicModel::qModelIndexToSong(const QModelIndex &index)
 {
-  return songsList.at(index.row());
+  return &songs.at(index.row());
 }

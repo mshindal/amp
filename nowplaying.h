@@ -1,3 +1,6 @@
+#ifndef NOWPLAYING_H
+#define NOWPLAYING_H
+
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QLabel>
@@ -15,5 +18,7 @@ class NowPlaying : public QWidget
     QLabel* artistAlbum;
     QVBoxLayout* layout;
   public slots:
-    void setInfo(Song* s);
+    void setInfo(const Song* s);
 };
+
+#endif // NOWPLAYING_H

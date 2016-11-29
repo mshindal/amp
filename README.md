@@ -1,10 +1,7 @@
-# qTunes
+# amp
+amp - another music player
+
 A music player for Windows, macOS, and Linux.
-
-## Screenshots
-<img src="https://i.imgur.com/vyuaTPw.png" width="600" height="470" alt="qTunes on KDE.">
-
-qTunes on KDE.
 
 ## Building
 
@@ -22,8 +19,8 @@ qTunes on KDE.
 * Install [MSYS2](http://msys2.github.io/). Make sure you follow all instructions on the page, including the update process at the end.
 * MSYS2 includes three shells, all of which you can launch from the Start Menu: MSYS2 MSYS, MSYS2 MinGW 64-bit, and MSYS2 MinGW 32-bit. Make sure you're using the correct shell for each step, or else you'll get `command not found` errors.
 * Install the development packages we need by running the following command inside a **MSYS2 MSYS** shell: `mkdir -p /mingw64 && pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-make mingw-w64-x86_64-pkg-config mingw-w64-x86_64-qt5 mingw-w64-x86_64-taglib`. This might take a while!
-* Now that the packages we need are installed, we're ready to start building. Building happens inside a **MSYS2 MinGW 64-bit shell**. Open up a MSYS2 MinGW 64-bit shell and `cd` to the project's directory. *Note: In MSYS2, Windows drives are mounted off the root directory, so if you cloned the qTunes repository to C:\qTunes, you can access that directory inside of MSYS2 by navigating to /c/qTunes.* Once you're in the project's directory, run `qmake` to generate a Makefile, and `mingw32-make` to build the project.
-* The qTunes binary will be in a folder called `debug`. Launch it by running `./debug/qTunes`. If you want to build the release version, run `mingw32-make -f Makefile.Release` and then launch it by running `./release/qTunes`.
+* Now that the packages we need are installed, we're ready to start building. Building happens inside a **MSYS2 MinGW 64-bit shell**. Open up a MSYS2 MinGW 64-bit shell and `cd` to the project's directory. *Note: In MSYS2, Windows drives are mounted off the root directory, so if you cloned the amp repository to C:\amp, you can access that directory inside of MSYS2 by navigating to /c/amp.* Once you're in the project's directory, run `qmake` to generate a Makefile, and `mingw32-make` to build the project.
+* The amp binary will be in a folder called `debug`. Launch it by running `./debug/amp`. If you want to build the release version, run `mingw32-make -f Makefile.Release` and then launch it by running `./release/amp`.
 
 ### macOS
 TODO, because I don't have a Mac, and Apple purposely makes it hard to run macOS in a virtual machine.

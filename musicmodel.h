@@ -19,12 +19,10 @@ class MusicModel : public QAbstractListModel
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
     void scan();
-    Song* qModelIndexToSong(const QModelIndex &index);
+    const Song* qModelIndexToSong(const QModelIndex &index);
   private:
     void searchFolderRecursively(const QString& absolutePath);
-    QList <Song*> songsList;
-    QHash <QByteArray, Song*> songs;
-    QHash <QByteArray, Album*> albums;
+    QList <Song> songs;
 };
 
 #endif // MUSICMODEL_H

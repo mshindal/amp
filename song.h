@@ -1,14 +1,20 @@
 #ifndef SONG_H
 #define SONG_H
-#include "treenode.h"
 
-class Song : public TreeNode
+#include <QString>
+#include <QVariant>
+
+class Song
 {
-  public:
-    Song(const QString& path);
-    QByteArray getHashCode();
-  private:
-    void readTags();
+public:
+  Song(QString path);
+  QByteArray getHashCode();
+  QString path;
+  QVariant title;
+  QVariant artist;
+  QVariant album;
+  QVariant trackNum;
+  QVariant year;
 };
 
 #endif // SONG_H

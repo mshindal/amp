@@ -47,9 +47,8 @@ MainWindow::~MainWindow()
 void MainWindow::playSong(QModelIndex index)
 {
   player->stop();
-  Song* s = model->qModelIndexToSong(index);
-  currentSong = s;
-  player->setMedia(QUrl::fromLocalFile(s->path));
+  currentSong = model->qModelIndexToSong(index);
+  player->setMedia(QUrl::fromLocalFile(currentSong->path));
   player->play();
 }
 
