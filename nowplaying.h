@@ -1,3 +1,6 @@
+#ifndef NOWPLAYING_H
+#define NOWPLAYING_H
+
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QLabel>
@@ -17,3 +20,5 @@ class NowPlaying : public QWidget
   public slots:
     void setInfo(Song* s);
 };
+
+#endif // NOWPLAYING_H
