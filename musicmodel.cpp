@@ -8,23 +8,11 @@ MusicModel::MusicModel(QObject* parent) : QAbstractListModel(parent)
   /* right now we scan for music before completely starting the app,
    * but really we should do it incrementally in another thread */
   scan();
-
-  // uncomment to print trees of albums and songs
-  /*
-  QHash<QByteArray, Album*>::const_iterator i = albums.constBegin();
-  while (i != albums.constEnd()) {
-    std::cout << i.value()->title.toString().toStdString() << std::endl;
-    for (const Song* s : i.value()->songs) {
-      std::cout << "\t" << s->title.toString().toStdString() << std::endl;
-    }
-    ++i;
-  }
-  */
 }
 
 int MusicModel::rowCount(const QModelIndex &parent) const
 {
-  return songsList.count();
+  return songs.count();
 }
 
 int MusicModel::columnCount(const QModelIndex &parent) const
@@ -37,15 +25,15 @@ QVariant MusicModel::data(const QModelIndex &index, int role) const
   if (role == Qt::DisplayRole) {
     switch (index.column()) {
     case 0:
-      return songsList.at(index.row())->title;
+      return songs.at(index.row()).title;
     case 1:
-      return songsList.at(index.row())->artist;
+      return songs.at(index.row()).artist;
     case 2:
-      return songsList.at(index.row())->album;
+      return songs.at(index.row()).album;
     case 3:
-      return songsList.at(index.row())->year;
+      return songs.at(index.row()).year;
     case 4:
-      return songsList.at(index.row())->trackNum;
+      return songs.at(index.row()).trackNum;
     }
   }
 
@@ -100,29 +88,8 @@ void MusicModel::searchFolderRecursively(const QString& absolutePath)
   for (const QString& relativePath : relativePaths) {
     QString absolutePath = dir.absoluteFilePath(relativePath);
     try {
-      Song* s = new Song(absolutePath);
-
-      QByteArray songHash = s->getHashCode();
-
-      if (!songs.contains(songHash)) {
-        songs.insert(songHash, s);
-        songsList.append(s);
-      } else {
-        delete s;
-        continue;
-      }
-
-      Album* a = new Album(s->album, s->artist, s->year);
-      QByteArray albumHash = a->getHashCode();
-
-      if (!albums.contains(albumHash)) {
-        albums.insert(albumHash, a);
-      } else {
-        delete a;
-        a = albums.value(albumHash);
-      }
-
-      a->songs.insert(s->trackNum.toInt(), s);
+      Song s(absolutePath);
+      songs.append(s);
     } catch (std::runtime_error& e) {
       std::cerr << absolutePath.toStdString() << ": " << e.what() << std::endl;
     }
@@ -139,7 +106,7 @@ void MusicModel::searchFolderRecursively(const QString& absolutePath)
   }
 }
 
-Song* MusicModel::qModelIndexToSong(const QModelIndex &index)
+const Song* MusicModel::qModelIndexToSong(const QModelIndex &index)
 {
-  return songsList.at(index.row());
+  return &songs.at(index.row());
 }

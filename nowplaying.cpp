@@ -15,7 +15,7 @@ NowPlaying::~NowPlaying()
 {
 }
 
-void NowPlaying::setInfo(Song* s)
+void NowPlaying::setInfo(const Song* s)
 {
   if (s == nullptr) {
     this->title->setText("Empty");
