@@ -1,4 +1,4 @@
-TARGET = qTunes
+TARGET = amp
 TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
