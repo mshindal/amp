@@ -3,6 +3,8 @@ amp - another music player
 
 A music player for Windows, macOS, and Linux.
 
+<img src="https://i.imgur.com/sWu9CkD.png">
+
 ## Building
 
 ### Linux
