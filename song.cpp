@@ -7,6 +7,11 @@
 #include <QByteArray>
 #include <iostream>
 
+Song::Song()
+{
+
+}
+
 Song::Song(QString path)
 {
   this->path = path;

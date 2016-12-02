@@ -5,12 +5,14 @@ SOURCES += main.cpp\
     song.cpp \
     musicmodel.cpp \
     album.cpp \
-    nowplaying.cpp
+    nowplaying.cpp \
+    scanner.cpp
 HEADERS  += mainwindow.h \
     song.h \
     musicmodel.h \
     album.h \
-    nowplaying.h
+    nowplaying.h \
+    scanner.h
 QT += core gui multimedia widgets
 CONFIG += c++11 link_pkgconfig
 PKGCONFIG += taglib

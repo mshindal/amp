@@ -6,7 +6,9 @@
 
 class Song
 {
+
 public:
+  Song();
   Song(QString path);
   QByteArray getHashCode();
   QString path;
@@ -16,5 +18,7 @@ public:
   QVariant trackNum;
   QVariant year;
 };
+
+Q_DECLARE_METATYPE(Song);
 
 #endif // SONG_H
