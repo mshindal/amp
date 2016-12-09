@@ -6,19 +6,21 @@
 #include <QLabel>
 #include "song.h"
 
-class NowPlaying : public QWidget
-{
-  Q_OBJECT
+class NowPlaying : public QWidget {
+Q_OBJECT
 
-  public:
-    NowPlaying(QWidget* parent = nullptr);
+public:
+    NowPlaying(QWidget *parent = nullptr);
+
     ~NowPlaying();
-  private:
-    QLabel* title;
-    QLabel* artistAlbum;
-    QVBoxLayout* layout;
-  public slots:
-    void setInfo(const Song* s);
+
+private:
+    QLabel *title;
+    QLabel *artistAlbum;
+    QVBoxLayout *layout;
+public slots:
+
+    void setInfo(const Song *s);
 };
 
 #endif // NOWPLAYING_H

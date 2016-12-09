@@ -4,19 +4,21 @@
 #include <QString>
 #include <QVariant>
 
-class Song
-{
+class Song {
 
 public:
-  Song();
-  Song(QString path);
-  QByteArray getHashCode();
-  QString path;
-  QVariant title;
-  QVariant artist;
-  QVariant album;
-  QVariant trackNum;
-  QVariant year;
+    Song();
+
+    Song(QString path);
+
+    QByteArray getHashCode();
+
+    QString path;
+    QVariant title;
+    QVariant artist;
+    QVariant album;
+    QVariant trackNum;
+    QVariant year;
 };
 
 Q_DECLARE_METATYPE(Song);

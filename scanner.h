@@ -4,16 +4,19 @@
 #include <QThread>
 #include "song.h"
 
-class Scanner : public QThread
-{
-  Q_OBJECT
+class Scanner : public QThread {
+Q_OBJECT
 public:
-  Scanner();
-  void run() override;
+    Scanner();
+
+    void run() override;
+
 private:
-  void searchFolderRecursively(QString absolutePath);
+    void searchFolderRecursively(QString absolutePath);
+
 signals:
-  void songFound(Song s);
+
+    void songFound(Song s);
 };
 
 #endif // SCANNER_H

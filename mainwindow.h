@@ -11,26 +11,30 @@
 #include "musicmodel.h"
 #include "nowplaying.h"
 
-class MainWindow : public QMainWindow
-{
-  Q_OBJECT
-
-  public:
+class MainWindow : public QMainWindow {
+Q_OBJECT
+public:
     MainWindow(QWidget *parent = nullptr);
+
     ~MainWindow();
-  private:
-    QWidget* centralWidget;
-    QTreeView* treeView;
-    MusicModel* model;
-    QMediaPlayer* player;
-    QSlider* slider;
-    QVBoxLayout* layout;
-    NowPlaying* nowPlaying;
-    const Song* currentSong;
-  private slots:
+
+private:
+    QWidget *centralWidget;
+    QTreeView *treeView;
+    MusicModel *model;
+    QMediaPlayer *player;
+    QSlider *slider;
+    QVBoxLayout *layout;
+    NowPlaying *nowPlaying;
+    const Song *currentSong;
+private slots:
+
     void playSong(QModelIndex index);
+
     void songPositionChanged(qint64 position);
+
     void sliderPositionChanged(int newValue);
+
     void playerStateChanged(QMediaPlayer::State state);
 };
 
