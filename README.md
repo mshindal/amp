@@ -7,8 +7,14 @@ A music player for Windows, macOS, and Linux.
 
 ## Building
 
-### Ubuntu
+### Linux
+
+#### Ubuntu
 * Install the development packages we need with `sudo apt install g++ cmake make pkg-config qt5-default qtmultimedia5-dev libtag1-dev`.
+* Build with `cmake . && make`.
+
+#### Fedora
+* Install the development packages we need with `sudo dnf install gcc-c++ cmake make pkgconfig qt5-qtbase-devel qt5-qtmultimedia-devel taglib-devel`.
 * Build with `cmake . && make`.
 
 ### Windows
