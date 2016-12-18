@@ -18,9 +18,9 @@ A music player for Windows, macOS, and Linux.
 * Build with `cmake . && make`.
 
 ### Windows
-* Install [MSYS2](http://msys2.github.io/). 
-* Install the development packages we need by running the following command inside a **MSYS2 MinGW 64-bit** shell: `mkdir -p /mingw64 && pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake mingw-w64-x86_64-make mingw-w64-x86_64-pkg-config mingw-w64-x86_64-qt5 mingw-w64-x86_64-taglib`.
-* Build with `cmake -G "Unix Makefiles" . && make`. 
+* Install [MSYS2](http://msys2.github.io/) and open up a **MSYS2 MinGW 64-bit** shell. 
+* Install the development packages we need with `mkdir -p /mingw64 && pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake mingw-w64-x86_64-make mingw-w64-x86_64-pkg-config mingw-w64-x86_64-qt5 mingw-w64-x86_64-taglib`.
+* Build with `cmake -G "MSYS Makefiles" . && mingw32-make`. 
 
 ### macOS
 TODO, but probably use Homebrew.
