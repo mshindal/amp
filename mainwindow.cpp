@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "player.h"
 
 // how many "steps" the slider has; e.g. it ranges from 0 to this number
 #define SLIDER_RESOLUTION 10000
@@ -41,10 +42,13 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::playSong(QModelIndex index) {
+    /*
     player->stop();
     currentSong = model->qModelIndexToSong(index);
     player->setMedia(QUrl::fromLocalFile(currentSong->path));
     player->play();
+     */
+    Player p(model->qModelIndexToSong(index)->path);
 }
 
 void MainWindow::songPositionChanged(qint64 position) {
