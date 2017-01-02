@@ -10,6 +10,7 @@
 #include <QWidget>
 #include "musicmodel.h"
 #include "nowplaying.h"
+#include "player.h"
 
 class MainWindow : public QMainWindow {
 Q_OBJECT
@@ -22,7 +23,7 @@ private:
     QWidget *centralWidget;
     QTreeView *treeView;
     MusicModel *model;
-    QMediaPlayer *player;
+    Player player;
     QSlider *slider;
     QVBoxLayout *layout;
     NowPlaying *nowPlaying;

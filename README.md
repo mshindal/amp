@@ -14,7 +14,8 @@ A music player for Windows, macOS, and Linux.
 * Build with `cmake . && make`.
 
 #### Fedora
-* Install the development packages we need with `sudo dnf install gcc-c++ cmake make pkgconfig qt5-qtbase-devel qt5-qtmultimedia-devel taglib-devel`.
+* Add the [RPMFusion](https://rpmfusion.org/) repositories to your system.
+* Install the development packages we need with `sudo dnf install gcc-c++ cmake make pkgconfig qt5-qtbase-devel vlc-devel taglib-devel`.
 * Build with `cmake . && make`.
 
 ### Windows
