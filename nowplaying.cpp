@@ -15,7 +15,7 @@ NowPlaying::~NowPlaying() {
 
 void NowPlaying::setInfo(const Song *s) {
     if (s == nullptr) {
-        this->title->setText("Empty");
+        this->title->setText("");
         this->artistAlbum->setText("");
     } else {
         this->title->setText(s->title.toString());

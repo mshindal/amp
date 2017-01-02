@@ -1,3 +1,4 @@
+#include <iostream>
 #include "mainwindow.h"
 
 // how many "steps" the slider has; e.g. it ranges from 0 to this number
@@ -23,10 +24,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     model = new MusicModel(treeView);
     treeView->setModel(model);
+    treeView->setColumnWidth(0, 350);
+
+    try {
+        player = new Player();
+    } catch (std::exception& e) {
+        std::cerr << e.what() << std::endl;
+    }
 
     connect(treeView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(playSong(QModelIndex)));
+    connect(player, SIGNAL(endReached()), this, SLOT(playNext()));
     //connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(songPositionChanged(qint64)));
-    //connect(player, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(playerStateChanged(QMediaPlayer::State)));
     //connect(slider, SIGNAL(sliderMoved(int)), this, SLOT(sliderPositionChanged(int)));
 
     this->setMinimumHeight(600);
@@ -34,13 +42,25 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 MainWindow::~MainWindow() {
+    delete player;
 }
 
 void MainWindow::playSong(QModelIndex index) {
-    player.stop();
+    if (!index.isValid()) {
+        currentIndex = QModelIndex();
+        currentSong = nullptr;
+        nowPlaying->setInfo(nullptr);
+        return;
+    }
+    currentIndex = index;
     currentSong = model->qModelIndexToSong(index);
-    player.openFile(currentSong->path);
-    player.play();
+    try {
+        player->openFile(currentSong->path);
+        player->play();
+        nowPlaying->setInfo(currentSong);
+    } catch (std::exception& e) {
+        std::cerr << currentSong->path.toStdString() << ": " << e.what() << std::endl;
+    }
 }
 
 void MainWindow::songPositionChanged(qint64 position) {
@@ -72,4 +92,9 @@ void MainWindow::playerStateChanged(QMediaPlayer::State state) {
 //        default:
 //            break;
 //    }
+}
+
+void MainWindow::playNext() {
+    QModelIndex nextIndex = model->index(currentIndex.row() + 1, 0);
+    playSong(nextIndex);
 }

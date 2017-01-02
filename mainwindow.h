@@ -16,26 +16,22 @@ class MainWindow : public QMainWindow {
 Q_OBJECT
 public:
     MainWindow(QWidget *parent = nullptr);
-
     ~MainWindow();
-
 private:
     QWidget *centralWidget;
     QTreeView *treeView;
     MusicModel *model;
-    Player player;
+    Player* player;
     QSlider *slider;
     QVBoxLayout *layout;
     NowPlaying *nowPlaying;
     const Song *currentSong;
+    QModelIndex currentIndex;
 private slots:
-
     void playSong(QModelIndex index);
-
+    void playNext();
     void songPositionChanged(qint64 position);
-
     void sliderPositionChanged(int newValue);
-
     void playerStateChanged(QMediaPlayer::State state);
 };
 

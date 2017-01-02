@@ -18,8 +18,13 @@ public slots:
     void play();
     void stop();
 private:
-    libvlc_instance_t *vlcInstance = NULL;
-    libvlc_media_player_t *vlcPlayer = NULL;
+    libvlc_instance_t *vlcInstance = nullptr;
+    libvlc_media_player_t *vlcPlayer = nullptr;
+    libvlc_event_manager_t *eventMananager;
+    static void end_reached_cb(const struct libvlc_event_t *t, void *data);
+    bool isPlaying();
+signals:
+    void endReached();
 };
 
 

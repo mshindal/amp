@@ -48,7 +48,7 @@ QVariant MusicModel::headerData(int section, Qt::Orientation orientation, int ro
                 case 3:
                     return "Year";
                 case 4:
-                    return "Track No";
+                    return "#";
             }
         }
     }

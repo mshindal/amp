@@ -3,49 +3,59 @@
 //
 
 #include <stdexcept>
+#include <QtCore/QDir>
+#include <iostream>
 #include "player.h"
 
 Player::Player() {
-    vlcInstance = libvlc_new(0, NULL);
-    if (vlcInstance == NULL) {
+    vlcInstance = libvlc_new(0, nullptr);
+    if (vlcInstance == nullptr) {
         throw std::runtime_error("Could not initialize libVLC");
     }
+
+    vlcPlayer = libvlc_media_player_new(vlcInstance);
+    if (vlcPlayer == nullptr) {
+        throw std::runtime_error("Could not initialize libVLC media player");
+    }
+
+    eventMananager = libvlc_media_player_event_manager(vlcPlayer);
+    libvlc_event_attach(eventMananager, libvlc_MediaPlayerEndReached, end_reached_cb, this);
 }
 
 Player::~Player() {
-    if (vlcInstance) {
-        libvlc_release(vlcInstance);
-    }
+    libvlc_media_player_release(vlcPlayer);
+    libvlc_release(vlcInstance);
 }
 
 void Player::openFile(QString path) {
-    if (vlcPlayer && libvlc_media_player_is_playing(vlcPlayer)) {
+    if (isPlaying()) {
         stop();
     }
 
-    // TODO: might want to convert the path to a C-string in a different way
-    libvlc_media_t *vlcMedia = libvlc_media_new_path(vlcInstance, path.toUtf8().constData());
-
-    if (!vlcMedia) {
+    QString nativePath = QDir::toNativeSeparators(path);
+    libvlc_media_t *vlcMedia = libvlc_media_new_path(vlcInstance, nativePath.toUtf8().constData());
+    if (vlcMedia == nullptr) {
         throw std::runtime_error("libVLC could not open media");
     }
 
-    vlcPlayer = libvlc_media_player_new_from_media(vlcMedia);
+    libvlc_media_player_set_media(vlcPlayer, vlcMedia);
+
     libvlc_media_release(vlcMedia);
 }
 
-void Player::play() {
-    if (!vlcPlayer) {
-        return;
-    }
+bool Player::isPlaying() {
+    return libvlc_media_player_is_playing(vlcPlayer) == 1;
+}
 
+void Player::play() {
     libvlc_media_player_play(vlcPlayer);
 }
 
 void Player::stop() {
-    if (vlcPlayer) {
-        libvlc_media_player_stop(vlcPlayer);
-        libvlc_media_player_release(vlcPlayer);
-        vlcPlayer = NULL;
-    }
+    libvlc_media_player_stop(vlcPlayer);
+}
+
+void Player::end_reached_cb(const struct libvlc_event_t *t, void *data) {
+    Player *player = (Player *) data;
+    player->endReached();
 }
