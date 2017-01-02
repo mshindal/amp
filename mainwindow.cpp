@@ -18,7 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
     layout->addWidget(nowPlaying);
 
     slider = new QSlider(Qt::Horizontal);
-    slider->setDisabled(true);
     slider->setRange(0, SLIDER_RESOLUTION);
     layout->addWidget(slider);
 
@@ -34,8 +33,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(treeView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(playSong(QModelIndex)));
     connect(player, SIGNAL(endReached()), this, SLOT(playNext()));
-    //connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(songPositionChanged(qint64)));
-    //connect(slider, SIGNAL(sliderMoved(int)), this, SLOT(sliderPositionChanged(int)));
+    connect(player, SIGNAL(positionChanged(float)), this, SLOT(songPositionChanged(float)));
+    connect(slider, SIGNAL(sliderMoved(int)), this, SLOT(sliderPositionChanged(int)));
 
     this->setMinimumHeight(600);
     this->setMinimumWidth(800);
@@ -63,35 +62,15 @@ void MainWindow::playSong(QModelIndex index) {
     }
 }
 
-void MainWindow::songPositionChanged(qint64 position) {
+void MainWindow::songPositionChanged(float newPosition) {
     // don't change the position of the slider while the user is adjusting it
-//    if (!slider->isSliderDown()) {
-//        float relativePosition = ((float) position / (float) player->duration()) * SLIDER_RESOLUTION;
-//        slider->setValue(relativePosition);
-//    }
+    if (!slider->isSliderDown()) {
+        slider->setValue(newPosition * SLIDER_RESOLUTION);
+    }
 }
 
-void MainWindow::sliderPositionChanged(int newValue) {
-//    qint64 relativePosition = ((float) newValue / SLIDER_RESOLUTION) * (float) player->duration();
-//    player->setPosition(relativePosition);
-}
-
-void MainWindow::playerStateChanged(QMediaPlayer::State state) {
-//    switch (state) {
-//        case QMediaPlayer::StoppedState:
-//            slider->setDisabled(true);
-//            currentSong = nullptr;
-//            nowPlaying->setInfo(nullptr);
-//            break;
-//        case QMediaPlayer::PlayingState:
-//            slider->setDisabled(false);
-//            nowPlaying->setInfo(currentSong);
-//            break;
-//        case QMediaPlayer::PausedState:
-//            break;
-//        default:
-//            break;
-//    }
+void MainWindow::sliderPositionChanged(int newPosition) {
+    player->setPosition((float) newPosition / SLIDER_RESOLUTION);
 }
 
 void MainWindow::playNext() {

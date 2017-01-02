@@ -30,9 +30,8 @@ private:
 private slots:
     void playSong(QModelIndex index);
     void playNext();
-    void songPositionChanged(qint64 position);
-    void sliderPositionChanged(int newValue);
-    void playerStateChanged(QMediaPlayer::State state);
+    void songPositionChanged(float newPosition);
+    void sliderPositionChanged(int newPosition);
 };
 
 #endif // MAINWINDOW_H

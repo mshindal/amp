@@ -17,14 +17,16 @@ public slots:
     void openFile(QString path);
     void play();
     void stop();
+    void setPosition(float position);
 private:
     libvlc_instance_t *vlcInstance = nullptr;
     libvlc_media_player_t *vlcPlayer = nullptr;
     libvlc_event_manager_t *eventMananager;
-    static void end_reached_cb(const struct libvlc_event_t *t, void *data);
+    static void callback(const struct libvlc_event_t *event, void *data);
     bool isPlaying();
 signals:
     void endReached();
+    void positionChanged(float newPosition);
 };
 
 

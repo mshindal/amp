@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <QtCore/QDir>
 #include <iostream>
+#include <vlc/vlc.h>
 #include "player.h"
 
 Player::Player() {
@@ -19,7 +20,10 @@ Player::Player() {
     }
 
     eventMananager = libvlc_media_player_event_manager(vlcPlayer);
-    libvlc_event_attach(eventMananager, libvlc_MediaPlayerEndReached, end_reached_cb, this);
+    libvlc_event_e events[] = {libvlc_MediaPlayerEndReached, libvlc_MediaPlayerPositionChanged};
+    for (const libvlc_event_e &event : events) {
+        libvlc_event_attach(eventMananager, event, callback, this);
+    }
 }
 
 Player::~Player() {
@@ -55,7 +59,18 @@ void Player::stop() {
     libvlc_media_player_stop(vlcPlayer);
 }
 
-void Player::end_reached_cb(const struct libvlc_event_t *t, void *data) {
+void Player::setPosition(float position) {
+    libvlc_media_player_set_position(vlcPlayer, position);
+}
+
+void Player::callback(const struct libvlc_event_t *event, void *data) {
     Player *player = (Player *) data;
-    player->endReached();
+    switch (event->type) {
+        case libvlc_MediaPlayerEndReached:
+            emit player->endReached();
+            break;
+        case libvlc_MediaPlayerPositionChanged:
+            emit player->positionChanged(event->u.media_player_position_changed.new_position);
+            break;
+    }
 }
