@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QTreeView>
 #include <QObject>
-#include <QMediaPlayer>
 #include <QSlider>
 #include <QVBoxLayout>
 #include <QWidget>

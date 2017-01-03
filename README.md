@@ -10,7 +10,7 @@ A music player for Windows, macOS, and Linux.
 ### Linux
 
 #### Ubuntu
-* Install the development packages we need with `sudo apt install g++ cmake make pkg-config qt5-default qtmultimedia5-dev libtag1-dev`.
+* Install the development packages we need with `sudo apt install g++ cmake make pkg-config qtbase5-dev libvlc-dev libtag1-dev`.
 * Build with `cmake . && make`.
 
 #### Fedora
