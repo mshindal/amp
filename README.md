@@ -7,13 +7,7 @@ A music player for Windows, macOS, and Linux.
 
 ## Building
 
-### Linux
-
-#### Ubuntu
-* Install the development packages we need with `sudo apt install g++ cmake make pkg-config qtbase5-dev libvlc-dev libtag1-dev`.
-* Build with `cmake . && make`.
-
-#### Fedora
+### Fedora
 * Add the [RPMFusion](https://rpmfusion.org/) repositories to your system.
 * Install the development packages we need with `sudo dnf install gcc-c++ cmake make pkgconfig qt5-qtbase-devel vlc-devel taglib-devel`.
 * Build with `cmake . && make`.
@@ -24,4 +18,4 @@ A music player for Windows, macOS, and Linux.
 * Build with `cmake -G "MSYS Makefiles" . && mingw32-make`. 
 
 ### macOS
-TODO, but probably use Homebrew.
+I haven't had a chance to set up a macOS virtual machine yet, as Apple deliberately makes it quite hard to do so. The project theoretically should build on macOS however.
